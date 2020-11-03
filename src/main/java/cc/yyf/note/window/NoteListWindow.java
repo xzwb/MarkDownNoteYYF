@@ -106,7 +106,13 @@ public class NoteListWindow {
                 }
                 // 要保存的文件名称
                 String fileName = topic + ".md";
-                String path = this.getClass().getResource(File.separator).getPath() + fileName;
+//                String path = this.getClass().getResource(File.separator).getPath() + fileName;
+                String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
+                rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+                rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+                rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+                rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+                String path = rootClassPath + File.separator + fileName;
                 File file = new File(path);
                 // 文件已经存在
                 if (!file.exists()) {

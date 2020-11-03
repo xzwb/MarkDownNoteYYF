@@ -1,5 +1,6 @@
 package cc.yyf.note.window;
 
+import cc.yyf.note.pojo.GitHubBuilder;
 import cc.yyf.note.util.DESUtil;
 import cc.yyf.note.util.YYFPasswordUtil;
 import com.intellij.openapi.options.ConfigurationException;
@@ -71,18 +72,20 @@ public class GitHubUploadSettingView extends UploadSettingView {
             githubAddressIn.write(gitHubAddressInFile.getBytes(), 0, gitHubAddressInFile.length());
             githubAddressIn.flush();
             // gitHubToken
+            classPath = rootClassPath + File.separator + "githubToken.txt";
 //            classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("/").getPath()+"gitHubToken.txt");
 //            classPath = URLDecoder.decode(classPath, StandardCharsets.UTF_8.name());
-//            githubTokenIn = new FileOutputStream(classPath);
-//            githubTokenIn.write(gitHubTokenInFile.getBytes(), 0, gitHubTokenInFile.length());
-//            githubTokenIn.flush();
+            githubTokenIn = new FileOutputStream(classPath);
+            githubTokenIn.write(gitHubTokenInFile.getBytes(), 0, gitHubTokenInFile.length());
+            githubTokenIn.flush();
 //             gitHubOwner
+            classPath = rootClassPath + File.separator + "githubOwner.txt";
 //            classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("/").getPath()+"gitHubOwner.txt");
 //            classPath = URLDecoder.decode(classPath, StandardCharsets.UTF_8.name());
-//            githubOwnerIn = new FileOutputStream(classPath);
-//            githubOwnerIn.write(gitHubOwnerInFile.getBytes(), 0, gitHubOwnerInFile.length());
-//            githubOwnerIn.flush();
-//            GitHubBuilder.build(gitHubAddress, gitHubToken, gitHubOwner);
+            githubOwnerIn = new FileOutputStream(classPath);
+            githubOwnerIn.write(gitHubOwnerInFile.getBytes(), 0, gitHubOwnerInFile.length());
+            githubOwnerIn.flush();
+            GitHubBuilder.build(gitHubAddress, gitHubToken, gitHubOwner);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -111,55 +114,59 @@ public class GitHubUploadSettingView extends UploadSettingView {
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
         try {
-            // 文件如果没有就创建
-//            File fileToken = new File(this.getClass().getResource(File.separator).getPath() + "gitHubToken.txt");
-//            if (!fileToken.exists()) {
-//                fileToken.createNewFile();
-//            }
-//            File fileAddress = new File(this.getClass().getResource(File.separator).getPath() + "gitHubAddress.txt");
             String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
             rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
             rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
             rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
             rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
-            String classPath = rootClassPath + File.separator + "githubAddress.txt";
+            String classPath = rootClassPath + File.separator + "githubToken.txt";
+            // 文件如果没有就创建
+//            File fileToken = new File(this.getClass().getResource(File.separator).getPath() + "gitHubToken.txt");
+            File fileToken = new File(classPath);
+            if (!fileToken.exists()) {
+                fileToken.createNewFile();
+            }
+//            File fileAddress = new File(this.getClass().getResource(File.separator).getPath() + "gitHubAddress.txt");
+            classPath = rootClassPath + File.separator + "githubAddress.txt";
 //            System.out.println(classPath);
             File fileAddress = new File(classPath);
             if (!fileAddress.exists()) {
                 fileAddress.createNewFile();
             }
 //            File fileOwner = new File(this.getClass().getResource(File.separator).getPath() + "gitHubOwner.txt");
-//            if (!fileOwner.exists()) {
-//                fileOwner.createNewFile();
-//            }
+            classPath = rootClassPath + File.separator + "githubOwner.txt";
+            File fileOwner = new File(classPath);
+            if (!fileOwner.exists()) {
+                fileOwner.createNewFile();
+            }
             // 获取文件的InPutStream
-//            githubTokenIn = new FileInputStream(fileToken);
+            githubTokenIn = new FileInputStream(fileToken);
             githubAddressIn = new FileInputStream(fileAddress);
-//            githubOwnerIn = new FileInputStream(fileOwner);
-//            byte[] owner = new byte[1024];
+            githubOwnerIn = new FileInputStream(fileOwner);
+            byte[] owner = new byte[1024];
             byte[] address = new byte[1024];
-//            byte[] token = new byte[1024];
+            byte[] token = new byte[1024];
             int addressNum = githubAddressIn.read(address);
-//            int tokenNum = githubTokenIn.read(token);
-//            int ownerNum = githubOwnerIn.read(owner);
+            int tokenNum = githubTokenIn.read(token);
+            int ownerNum = githubOwnerIn.read(owner);
             String githubAddress = "";
             if (addressNum != -1) {
                 githubAddress = new String(address, 0, addressNum);
                 githubAddress = DESUtil.decrypt(YYFPasswordUtil.YYF_KEY, githubAddress);
             }
-//            String githubToken = "";
-//            if (tokenNum != -1) {
-//                githubToken = new String(token, 0, tokenNum);
-//                githubToken = DESUtil.decrypt(YYFPasswordUtil.YYF_KEY, githubToken);
-//            }
-//            String githubOwner = "";
-//            if (ownerNum != -1) {
-//                githubOwner = new String(owner, 0, ownerNum);
-//                githubOwner = DESUtil.decrypt(YYFPasswordUtil.YYF_KEY, githubOwner);
-//            }
+            String githubToken = "";
+            if (tokenNum != -1) {
+                githubToken = new String(token, 0, tokenNum);
+                githubToken = DESUtil.decrypt(YYFPasswordUtil.YYF_KEY, githubToken);
+            }
+            String githubOwner = "";
+            if (ownerNum != -1) {
+                githubOwner = new String(owner, 0, ownerNum);
+                githubOwner = DESUtil.decrypt(YYFPasswordUtil.YYF_KEY, githubOwner);
+            }
             otherSettingWindow.getGithubRepository().setText(githubAddress);
-//            otherSettingWindow.getGithubToken().setText(githubToken);
-//            otherSettingWindow.getGitHubOwner().setText(githubOwner);
+            otherSettingWindow.getGithubToken().setText(githubToken);
+            otherSettingWindow.getGitHubOwner().setText(githubOwner);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
