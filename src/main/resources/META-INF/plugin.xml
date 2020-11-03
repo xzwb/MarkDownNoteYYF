@@ -1,0 +1,40 @@
+
+<idea-plugin>
+    <id>cc.yyf.MarkDownNote-Plugin</id>
+    <name>MarkDownNoteYYF</name>
+    <vendor email="xzwb@xiyoulinux.org" url="http://yyf12345.com">yyf</vendor>
+
+    <description><![CDATA[
+    一个方便程序员对源码做注释，以及方便程序员做笔记的插件<br>
+    <em>MarkdownNote</em>
+    ]]></description>
+
+    <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+         on how to target different products -->
+    <!-- uncomment to enable plugin in all products
+    <depends>com.intellij.modules.lang</depends>
+    -->
+    <idea-version since-build="181"/>
+
+    <depends>com.intellij.modules.java</depends>
+    <!--    <depends>com.intellij.modules.java</depends>-->
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationInitializedListener implementation="cc.yyf.note.init.IDEAInit"/>
+        <!-- Add your extensions here -->
+        <toolWindow id = "noteWindow" factoryClass="cc.yyf.note.window.NoteToolWindow" anchor="right"/>
+        <applicationConfigurable displayName="MarkDownUpload" instance="cc.yyf.note.window.FirstSettingView">
+            <configurable instance="cc.yyf.note.window.GitHubUploadSettingView"/>
+        </applicationConfigurable>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+        <action id="PopupMenuActionID" class="cc.yyf.note.action.PopupMenuAction" text="MarkDownNote" description="添加MarkDown笔记">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+            <keyboard-shortcut keymap="$default" first-keystroke="ctrl F"/>
+        </action>
+    </actions>
+
+</idea-plugin>
