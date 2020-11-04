@@ -3,6 +3,7 @@ package cc.yyf.note.init;
 
 import cc.yyf.note.pojo.GitHubBuilder;
 import cc.yyf.note.util.DESUtil;
+import cc.yyf.note.util.UrlUtil;
 import cc.yyf.note.util.YYFPasswordUtil;
 import com.intellij.ide.ApplicationInitializedListener;
 
@@ -19,11 +20,12 @@ public class IDEAInit implements ApplicationInitializedListener {
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
         try {
-            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+//            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+            String rootClassPath = UrlUtil.getUrl();
 //             文件如果没有就创建
             String classPath = rootClassPath + File.separator + "githubToken.txt";
 //            File fileToken = new File(this.getClass().getResource(File.separator).getPath() + "gitHubToken.txt");

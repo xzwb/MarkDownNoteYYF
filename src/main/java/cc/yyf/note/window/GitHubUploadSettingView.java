@@ -2,6 +2,7 @@ package cc.yyf.note.window;
 
 import cc.yyf.note.pojo.GitHubBuilder;
 import cc.yyf.note.util.DESUtil;
+import cc.yyf.note.util.UrlUtil;
 import cc.yyf.note.util.YYFPasswordUtil;
 import com.intellij.openapi.options.ConfigurationException;
 import org.jetbrains.annotations.Nls;
@@ -62,11 +63,12 @@ public class GitHubUploadSettingView extends UploadSettingView {
             // gitHubAddress
 //            String classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("/").getPath()+"gitHubAddress.txt");
 //            classPath = URLDecoder.decode(classPath, StandardCharsets.UTF_8.name());
-            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+//            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+            String rootClassPath = UrlUtil.getUrl();
             String classPath = rootClassPath + File.separator + "githubAddress.txt";
             githubAddressIn = new FileOutputStream(classPath);
             githubAddressIn.write(gitHubAddressInFile.getBytes(), 0, gitHubAddressInFile.length());
@@ -114,11 +116,12 @@ public class GitHubUploadSettingView extends UploadSettingView {
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
         try {
-            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+//            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
+//            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+            String rootClassPath = UrlUtil.getUrl();
             String classPath = rootClassPath + File.separator + "githubToken.txt";
             // 文件如果没有就创建
 //            File fileToken = new File(this.getClass().getResource(File.separator).getPath() + "gitHubToken.txt");

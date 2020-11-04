@@ -1,8 +1,8 @@
 
 <idea-plugin>
-    <id>cc.yyf.MarkDownNote-Plugin</id>
+    <id>cc.yyf.MarkDownNoteYYF</id>
     <name>MarkDownNoteYYF</name>
-    <vendor email="xzwb@xiyoulinux.org" url="http://yyf12345.com">yyf</vendor>
+    <vendor email="xzwb@xiyoulinux.org" url="https://github.com/xzwb/MarkDownNoteYYF">yyf</vendor>
 
     <description><![CDATA[
     一个方便程序员对源码做注释，以及方便程序员做笔记的插件<br>
