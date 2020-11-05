@@ -2,20 +2,34 @@ package cc.yyf.note.init;
 
 
 import cc.yyf.note.pojo.GitHubBuilder;
+import cc.yyf.note.pojo.NoteList;
 import cc.yyf.note.util.DESUtil;
 import cc.yyf.note.util.UrlUtil;
 import cc.yyf.note.util.YYFPasswordUtil;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.ide.ApplicationInitializedListener;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 
 public class IDEAInit implements ApplicationInitializedListener {
 
     @Override
     public void componentsInitialized() {
+        initGithubSetting();
+        initNoteList();
+    }
+
+    /**
+     * 将setting初始化
+     */
+    private void initGithubSetting() {
+        System.out.println("aaaa");
         InputStream githubAddressIn = null;
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
@@ -88,6 +102,42 @@ public class IDEAInit implements ApplicationInitializedListener {
                 e.printStackTrace();
             }
         }
-//
+    }
+
+    /**
+     * 初始化NoteList
+     */
+    private void initNoteList() {
+        FileInputStream noteListIn = null;
+        try {
+            // 获取文件路径
+            String noteListPath = UrlUtil.getUrl() + File.separator + "noteList.txt";
+            File noteListFile = new File(noteListPath);
+            if (!noteListFile.exists()) {
+                noteListFile.createNewFile();
+            }
+            noteListIn = new FileInputStream(noteListFile);
+            byte[] noteListByte = new byte[1024];
+            StringBuilder noteList = new StringBuilder();
+            int length = 0;
+            while ((length = noteListIn.read(noteListByte)) != -1) {
+                noteList.append(new String(noteListByte, 0, length));
+            }
+            ObjectMapper objectMapper = new ObjectMapper();
+            if (!noteList.toString().equals("")) {
+                JavaType javaType = objectMapper.getTypeFactory().constructParametricType(ArrayList.class, String.class);
+                NoteList.noteNameList = objectMapper.readValue(noteList.toString(), javaType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (noteListIn != null) {
+                try {
+                    noteListIn.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 }

@@ -22,6 +22,7 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <applicationInitializedListener implementation="cc.yyf.note.init.IDEAInit"/>
+        <projectCloseHandler implementation="cc.yyf.note.destroy.IDEDestroy"/>
         <!-- Add your extensions here -->
         <toolWindow id = "noteWindow" factoryClass="cc.yyf.note.window.NoteToolWindow" anchor="right"/>
         <applicationConfigurable displayName="MarkDownUpload" instance="cc.yyf.note.window.FirstSettingView">
