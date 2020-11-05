@@ -15,6 +15,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 
 
 public class IDEAInit implements ApplicationInitializedListener {
@@ -29,7 +30,6 @@ public class IDEAInit implements ApplicationInitializedListener {
      * 将setting初始化
      */
     private void initGithubSetting() {
-        System.out.println("aaaa");
         InputStream githubAddressIn = null;
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
@@ -125,7 +125,7 @@ public class IDEAInit implements ApplicationInitializedListener {
             }
             ObjectMapper objectMapper = new ObjectMapper();
             if (!noteList.toString().equals("")) {
-                JavaType javaType = objectMapper.getTypeFactory().constructParametricType(ArrayList.class, String.class);
+                JavaType javaType = objectMapper.getTypeFactory().constructParametricType(HashSet.class, String.class);
                 NoteList.noteNameList = objectMapper.readValue(noteList.toString(), javaType);
             }
         } catch (Exception e) {
