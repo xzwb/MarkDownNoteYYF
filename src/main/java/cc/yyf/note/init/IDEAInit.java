@@ -1,9 +1,9 @@
 package cc.yyf.note.init;
 
 
-import cc.yyf.note.pojo.GitHubBuilder;
-import cc.yyf.note.pojo.NoteList;
+import cc.yyf.note.pojo.*;
 import cc.yyf.note.util.DESUtil;
+import cc.yyf.note.util.SaveNoteCenterJson;
 import cc.yyf.note.util.UrlUtil;
 import cc.yyf.note.util.YYFPasswordUtil;
 import com.fasterxml.jackson.databind.JavaType;
@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class IDEAInit implements ApplicationInitializedListener {
@@ -24,6 +25,7 @@ public class IDEAInit implements ApplicationInitializedListener {
     public void componentsInitialized() {
         initGithubSetting();
         initNoteList();
+        SaveNoteCenterJson.getNoteJson();
     }
 
     /**

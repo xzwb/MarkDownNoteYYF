@@ -1,15 +1,19 @@
 package cc.yyf.note.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.swing.table.DefaultTableModel;
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
  * 要展示的数据中心
  */
-public class DataCenter {
+public class DataCenter implements Serializable {
     // 笔记的数据
     public static List<NoteData> NOTE_DATA_LIST = new LinkedList<>();
+
 
     // 构建表头
     public static String[] HEAD = {"标题", "备注", "文件名", "代码段"};

@@ -1,9 +1,11 @@
 package cc.yyf.note.pojo;
 
+import java.io.Serializable;
+
 /**
  * 需要保存的信息
  */
-public class NoteData {
+public class NoteData implements Serializable {
     // 选中的文本
     private String selectedText;
     // 文本所在的文件名
