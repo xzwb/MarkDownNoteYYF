@@ -1,10 +1,10 @@
 package cc.yyf.note.window;
 
-import cc.yyf.note.pojo.DataCenter;
-import cc.yyf.note.pojo.GitHubBuilder;
+import cc.yyf.note.pojo.*;
 import cc.yyf.note.procesor.DefaultSourceNoteData;
 import cc.yyf.note.procesor.FreeMarkProcessor;
 import cc.yyf.note.procesor.Processor;
+import cc.yyf.note.util.SetToArray;
 import cc.yyf.note.util.UpLoadGitHubUtil;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationDisplayType;
@@ -20,10 +20,13 @@ import com.intellij.openapi.wm.ToolWindow;
 import freemarker.template.TemplateException;
 
 import javax.swing.*;
+import javax.xml.crypto.Data;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * 工具视窗
@@ -44,16 +47,62 @@ public class NoteListWindow {
     // 表格
     private JTable table;
     // 文档标题
-    private JTextField textFieldTopic;
+    private JComboBox textFieldTopic;
     private JButton uploadButton;
 
     /**
      * 初始化表格
      */
-    public void init() {
+    private void init() {
+        initTable();
+        initJComboBox();
+        initTablePojo();
+    }
+
+    /**
+     * 设置表格
+     */
+    private void initTable() {
         // 设置表格
         table.setModel(DataCenter.TABLE_MODEL);
         table.setEnabled(true);
+    }
+
+    /**
+     * 设置下拉框
+     */
+    private void initJComboBox() {
+        String[] noteList =  SetToArray.convert(NoteList.noteNameList);
+        if (noteList == null) {
+            noteList = new String[]{""};
+            textFieldTopic.addItem("");
+        } else {
+            for (int i = 0; i < noteList.length; i++) {
+                textFieldTopic.addItem(noteList[i]);
+            }
+        }
+        textFieldTopic.setSelectedIndex(0);
+        NoteTopicNow.TopicNow = noteList[0];
+    }
+
+    /**
+     * 设置table中的初始数据
+     */
+    private void initTablePojo() {
+        // 判断当前的列表如果为空的话
+        if ("".equals(NoteTopicNow.TopicNow)) {
+            return;
+        }
+        // 获取当前列表的数据
+        List<NoteData> list = NoteCenter.NoteMap.get(NoteTopicNow.TopicNow);
+        // 判断选中的列表中有没有数据
+        if (list.size() > 0) {
+            for (int i = 0; i < list.size(); i++) {
+                NoteData noteData = list.get(i);
+                DataCenter.NOTE_DATA_LIST = list;
+                DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
+            }
+        }
     }
 
 
@@ -62,7 +111,8 @@ public class NoteListWindow {
         makeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String topic = textFieldTopic.getText();
+//                String topic = textFieldTopic.getText();
+                String topic = "";
                 if (topic == null || "".equals(topic)) {
                     MessageDialogBuilder.yesNo("操作结果", "文档标题没有输入");
                     return;
@@ -99,7 +149,8 @@ public class NoteListWindow {
         uploadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                String topic = textFieldTopic.getText();
+//                String topic = textFieldTopic.getText();
+                String topic = "";
                 if (topic == null || "".equals(topic)) {
                     MessageDialogBuilder.yesNo("操作结果", "文档标题没有输入");
                     return;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  */
 public class DataCenter implements Serializable {
     // 笔记的数据
-    public static List<NoteData> NOTE_DATA_LIST = new LinkedList<>();
+    public static List<NoteData> NOTE_DATA_LIST = new ArrayList<>();
 
 
     // 构建表头
