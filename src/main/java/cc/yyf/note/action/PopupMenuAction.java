@@ -29,10 +29,7 @@ public class PopupMenuAction extends AnAction {
         // 获取被选中文本所在文件的文件名
         String fileName = e.getRequiredData(CommonDataKeys.PSI_FILE).getViewProvider().getVirtualFile().getName();
         NoteData noteData = NoteDataBuilder.build(text, fileName);
-        NoteListDialog dialog = new NoteListDialog();
+        NoteListDialog dialog = new NoteListDialog(noteData);
         dialog.show();
-        // 弹出弹框
-        AddNoteDialog addNoteDialog = new AddNoteDialog(noteData);
-        addNoteDialog.show();
     }
 }

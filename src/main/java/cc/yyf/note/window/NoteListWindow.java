@@ -4,6 +4,7 @@ import cc.yyf.note.pojo.*;
 import cc.yyf.note.procesor.DefaultSourceNoteData;
 import cc.yyf.note.procesor.FreeMarkProcessor;
 import cc.yyf.note.procesor.Processor;
+import cc.yyf.note.util.NotificationUtil;
 import cc.yyf.note.util.SetToArray;
 import cc.yyf.note.util.UpLoadGitHubUtil;
 import com.intellij.notification.Notification;
@@ -24,6 +25,8 @@ import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -48,6 +51,11 @@ public class NoteListWindow {
     private JTable table;
     // 文档标题
     private JComboBox textFieldTopic;
+
+    public JComboBox getTextFieldTopic() {
+        return textFieldTopic;
+    }
+
     private JButton uploadButton;
 
     /**
@@ -108,11 +116,39 @@ public class NoteListWindow {
 
     public NoteListWindow(Project project, ToolWindow toolWindow) {
         init();
+        /**
+         * 选择框
+         */
+        textFieldTopic.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent itemEvent) {
+                // 只处理选中状态
+                if (itemEvent.getStateChange() == ItemEvent.SELECTED) {
+                    // 获取选中文本
+                    String selectText = (String) textFieldTopic.getSelectedItem();
+                    // 调用清除操作
+                    DataCenter.reset();
+                    // 获取当前列表中的数据
+                    List<NoteData> list = NoteCenter.NoteMap.get(selectText);
+                    if (list.size() > 0) {
+                        for (int i = 0; i < list.size(); i++) {
+                            NoteData noteData = list.get(i);
+                            DataCenter.NOTE_DATA_LIST = list;
+                            DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
+                        }
+                    }
+                }
+            }
+        });
+        /**
+         * 创建文件按钮
+         */
         makeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 //                String topic = textFieldTopic.getText();
-                String topic = "";
+                String topic = (String) textFieldTopic.getSelectedItem();
+//                String topic = "";
                 if (topic == null || "".equals(topic)) {
                     MessageDialogBuilder.yesNo("操作结果", "文档标题没有输入");
                     return;
@@ -133,24 +169,35 @@ public class NoteListWindow {
                         e.printStackTrace();
                     }
                     // 发送通知
-                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
-                    Notification notification = firstPluginId.createNotification("文档保存成功", MessageType.INFO);
-                    Notifications.Bus.notify(notification);
+//                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
+//                    Notification notification = firstPluginId.createNotification("文档保存成功", MessageType.INFO);
+//                    Notifications.Bus.notify(notification);
+                    NotificationUtil.notification("保存成功", "文档保存成功");
                 }
             }
         });
+        /**
+         * 清空文档按钮
+         */
         cancelButton.addActionListener(actionEvent -> DataCenter.reset());
+        /**
+         * 关闭按钮
+         */
         closeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 toolWindow.hide(null);
             }
         });
+        /**
+         * 上传按钮
+         */
         uploadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
 //                String topic = textFieldTopic.getText();
-                String topic = "";
+//                String topic = "";
+                String topic = (String) textFieldTopic.getSelectedItem();
                 if (topic == null || "".equals(topic)) {
                     MessageDialogBuilder.yesNo("操作结果", "文档标题没有输入");
                     return;
@@ -185,14 +232,16 @@ public class NoteListWindow {
                 file = new File(path);
                 if (UpLoadGitHubUtil.upload(GitHubBuilder.getInstance(), file, fileName)) {
                     // 发送通知
-                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
-                    Notification notification = firstPluginId.createNotification("文档上传成功", MessageType.INFO);
-                    Notifications.Bus.notify(notification);
+//                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
+//                    Notification notification = firstPluginId.createNotification("文档上传成功", MessageType.INFO);
+//                    Notifications.Bus.notify(notification);
+                    NotificationUtil.notification("保存文档", "文档上传成功");
                 } else {
                     // 发送通知
-                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
-                    Notification notification = firstPluginId.createNotification("文档上传失败", MessageType.INFO);
-                    Notifications.Bus.notify(notification);
+//                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
+//                    Notification notification = firstPluginId.createNotification("文档上传失败", MessageType.INFO);
+//                    Notifications.Bus.notify(notification);
+                    NotificationUtil.notification("保存文档", "文档上传失败");
                 }
                 file.delete();
             }

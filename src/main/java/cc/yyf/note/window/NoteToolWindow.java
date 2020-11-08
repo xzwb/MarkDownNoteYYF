@@ -1,5 +1,6 @@
 package cc.yyf.note.window;
 
+import cc.yyf.note.pojo.MyComponent;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
@@ -13,6 +14,8 @@ public class NoteToolWindow implements ToolWindowFactory {
     public void createToolWindowContent(@NotNull Project project, @NotNull ToolWindow toolWindow) {
         // 创建NoteListWindow对象
         NoteListWindow window = new NoteListWindow(project, toolWindow);
+        // 将window中的JComboBox实例传出来
+        MyComponent.noteToolWindowJComboBox = window.getTextFieldTopic();
         // 获取内容工厂实例
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         // 获取用于toolWindow显示的内容

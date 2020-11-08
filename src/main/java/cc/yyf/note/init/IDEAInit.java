@@ -14,9 +14,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 
 public class IDEAInit implements ApplicationInitializedListener {
@@ -26,14 +24,15 @@ public class IDEAInit implements ApplicationInitializedListener {
         initGithubSetting();
         initNoteList();
         SaveNoteCenterJson.getNoteJson();
-        NoteData noteData = NoteDataBuilder.build("abcde", "1.txt");
-        NoteData noteData1 = NoteDataBuilder.build("ccc", "2.txt");
-        List<NoteData> list = new ArrayList<>();
-        list.add(noteData);
-        list.add(noteData1);
-        NoteCenter.NoteMap.put("aa", list);
-        NoteList.noteNameList.add("aa");
-        NoteTopicNow.TopicNow = "aa";
+        NoteTopicNow.TopicNow = "";
+//        NoteData noteData = NoteDataBuilder.build("abcde", "1.txt");
+//        NoteData noteData1 = NoteDataBuilder.build("ccc", "2.txt");
+//        List<NoteData> list = new ArrayList<>();
+//        list.add(noteData);
+//        list.add(noteData1);
+//        NoteCenter.NoteMap.put("aa", list);
+//        NoteList.noteNameList.add("aa");
+//        NoteTopicNow.TopicNow = "aa";
     }
 
     /**

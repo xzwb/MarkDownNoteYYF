@@ -1,8 +1,6 @@
 package cc.yyf.note.dialog;
 
-import cc.yyf.note.pojo.DataCenter;
-import cc.yyf.note.pojo.DataConvert;
-import cc.yyf.note.pojo.NoteData;
+import cc.yyf.note.pojo.*;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.EditorTextField;
 import org.jetbrains.annotations.Nullable;
@@ -65,8 +63,10 @@ public class AddNoteDialog extends DialogWrapper {
             noteData.setNoteTitle(title);
             noteData.setNote(markDownNote);
             // 添加到数据中心
-            DataCenter.NOTE_DATA_LIST.add(noteData);
-            DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
+//            DataCenter.NOTE_DATA_LIST.add(noteData);
+//            DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
+            // 添加到集合中
+            NoteCenter.NoteMap.get(NoteTopicNow.TopicNow).add(noteData);
             AddNoteDialog.this.dispose();
         });
         jPanel.add(button);
