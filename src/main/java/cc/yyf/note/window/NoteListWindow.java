@@ -59,6 +59,7 @@ public class NoteListWindow {
     }
 
     private JButton uploadButton;
+    private JButton deleteButton;
 
     /**
      * 初始化表格
@@ -250,6 +251,25 @@ public class NoteListWindow {
                     NotificationUtil.notification("保存文档", "文档上传失败");
                 }
                 file.delete();
+            }
+        });
+        deleteButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                // 获取当前列表
+                String selectText = (String) textFieldTopic.getSelectedItem();
+                // 从NoteList中删除
+                NoteList.noteNameList.remove(selectText);
+                // 从NoteCenter中删除
+                NoteCenter.NoteMap.remove(selectText);
+                // 判断还有没有item
+                int count = textFieldTopic.getItemCount();
+                if (count == 0) {
+                    textFieldTopic.addItem("");
+                    textFieldTopic.setSelectedIndex(0);
+                } else {
+                    textFieldTopic.setSelectedIndex(0);
+                }
             }
         });
     }
