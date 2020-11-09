@@ -7,6 +7,8 @@ import cc.yyf.note.procesor.Processor;
 import cc.yyf.note.util.NotificationUtil;
 import cc.yyf.note.util.SetToArray;
 import cc.yyf.note.util.UpLoadGitHubUtil;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.notification.Notification;
 import com.intellij.notification.NotificationDisplayType;
 import com.intellij.notification.NotificationGroup;
@@ -21,15 +23,15 @@ import com.intellij.openapi.wm.ToolWindow;
 import freemarker.template.TemplateException;
 
 import javax.swing.*;
-import javax.xml.crypto.Data;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 工具视窗
@@ -103,9 +105,13 @@ public class NoteListWindow {
         }
         // 获取当前列表的数据
         List<NoteData> list = NoteCenter.NoteMap.get(NoteTopicNow.TopicNow);
+//        List<Map<String, String>> mapList = new ArrayList<>();
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapList = mapper.convertValue(list, new TypeReference<List<Map<String, String>>>(){});
         // 判断选中的列表中有没有数据
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
+//                NoteData noteData = NoteDataBuilder.build(mapList.get(i));
                 NoteData noteData = list.get(i);
                 DataCenter.NOTE_DATA_LIST = list;
                 DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));

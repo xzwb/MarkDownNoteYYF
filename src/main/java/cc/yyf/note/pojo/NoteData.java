@@ -56,4 +56,15 @@ public class NoteData implements Serializable {
     public void setNoteTitle(String noteTitle) {
         this.noteTitle = noteTitle;
     }
+
+    @Override
+    public String toString() {
+        return "NoteData{" +
+                "selectedText='" + selectedText + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", fileType='" + fileType + '\'' +
+                ", note='" + note + '\'' +
+                ", noteTitle='" + noteTitle + '\'' +
+                '}';
+    }
 }

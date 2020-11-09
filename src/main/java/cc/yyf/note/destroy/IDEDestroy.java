@@ -37,7 +37,7 @@ public class IDEDestroy implements ProjectCloseHandler {
                 noteListFile.createNewFile();
             }
             noteListOut = new FileOutputStream(noteListFile);
-            noteListOut.write(noteListJson.getBytes(), 0, noteListJson.length());
+            noteListOut.write(noteListJson.getBytes());
             noteListOut.flush();
         } catch (Exception e) {
             e.printStackTrace();

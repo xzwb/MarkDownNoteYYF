@@ -26,7 +26,7 @@ public class DataCenter implements Serializable {
      * 清空
      */
     public static void reset() {
-        NOTE_DATA_LIST.clear();
+        NOTE_DATA_LIST = new ArrayList<>();
         TABLE_MODEL.setDataVector(null, HEAD);
     }
 }

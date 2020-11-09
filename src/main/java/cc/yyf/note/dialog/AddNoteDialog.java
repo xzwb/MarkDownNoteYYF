@@ -7,6 +7,9 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 弹出窗口添加笔记
@@ -62,11 +65,30 @@ public class AddNoteDialog extends DialogWrapper {
             // 设置文本
             noteData.setNoteTitle(title);
             noteData.setNote(markDownNote);
-            // 添加到数据中心
-//            DataCenter.NOTE_DATA_LIST.add(noteData);
-//            DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
             // 添加到集合中
             NoteCenter.NoteMap.get(NoteTopicNow.TopicNow).add(noteData);
+            // 获取所有
+            int count = MyComponent.noteToolWindowJComboBox.getItemCount();
+            int select = 0;
+            for (int i = 0; i < count; i++) {
+                if (NoteTopicNow.TopicNow.equals((String) MyComponent.noteToolWindowJComboBox.getItemAt(i))) {
+                    select = i;
+                    break;
+                }
+            }
+            MyComponent.noteToolWindowJComboBox.setSelectedIndex(select);
+            String selectText = (String) MyComponent.noteToolWindowJComboBox.getSelectedItem();
+            // 调用清除操作
+            DataCenter.reset();
+            // 获取当前列表中的数据
+            List<NoteData> list = NoteCenter.NoteMap.get(selectText);
+            if (list.size() > 0) {
+                for (int i = 0; i < list.size(); i++) {
+                    NoteData noteData = list.get(i);
+                    DataCenter.NOTE_DATA_LIST = list;
+                    DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
+                }
+            }
             AddNoteDialog.this.dispose();
         });
         jPanel.add(button);

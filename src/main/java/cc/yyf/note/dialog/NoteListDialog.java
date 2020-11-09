@@ -85,13 +85,14 @@ public class NoteListDialog extends DialogWrapper {
             String noteTopic = noteName.getText();
             if ("".equals(noteTopic) || noteTopic == null) {
                 NotificationUtil.notification("创建新文档", "文档创建失败");
-                return;
+                NoteListDialog.this.dispose();
             }
             if (NoteList.noteNameList.add(noteTopic)) { // 添加set成功
                // 添加到map
                 List<NoteData> list = new ArrayList<>();
                 NoteCenter.NoteMap.put(noteTopic, list);
                 NoteTopicNow.TopicNow = noteTopic;
+                MyComponent.noteToolWindowJComboBox.removeItem("");
                 MyComponent.noteToolWindowJComboBox.addItem(noteTopic);
                 NoteListDialog.this.dispose();
                 // 弹出弹框

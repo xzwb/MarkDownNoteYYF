@@ -1,5 +1,8 @@
 package cc.yyf.note.pojo;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 /**
  * 使用建造者模式创建数据对象
  */
@@ -13,6 +16,17 @@ public class NoteDataBuilder {
         noteData.setSelectedText(selectedText);
         noteData.setFileName(fileName);
         noteData.setFileType(getFileType(fileName));
+        return noteData;
+    }
+
+    public static NoteData build(Map map) {
+        NoteData noteData = new NoteData();
+        noteData.setSelectedText((String) map.get("selectedText"));
+        noteData.setFileName((String) map.get("fileName"));
+        noteData.setFileType((String) map.get("fileType"));
+        noteData.setNote((String) map.get("note"));
+        noteData.setNoteTitle((String) map.get("noteTitle"));
+
         return noteData;
     }
 
