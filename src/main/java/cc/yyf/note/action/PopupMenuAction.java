@@ -1,18 +1,14 @@
 package cc.yyf.note.action;
 
-import cc.yyf.note.dialog.AddNoteDialog;
 import cc.yyf.note.dialog.NoteListDialog;
-import cc.yyf.note.pojo.NoteCenter;
 import cc.yyf.note.pojo.NoteData;
 import cc.yyf.note.pojo.NoteDataBuilder;
-import cc.yyf.note.util.SaveNoteCenterJson;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.CommonDataKeys;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 
-import java.util.HashMap;
 
 /**
  * 鼠标右键后弹出菜单

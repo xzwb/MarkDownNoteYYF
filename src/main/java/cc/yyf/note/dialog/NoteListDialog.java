@@ -3,7 +3,6 @@ package cc.yyf.note.dialog;
 import cc.yyf.note.pojo.*;
 import cc.yyf.note.util.NotificationUtil;
 import cc.yyf.note.util.SetToArray;
-import cc.yyf.note.window.NoteListWindow;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.ui.EditorTextField;
 import org.jetbrains.annotations.Nullable;

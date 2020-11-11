@@ -1,6 +1,5 @@
 package cc.yyf.note.pojo;
 
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**

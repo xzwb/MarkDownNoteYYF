@@ -3,7 +3,6 @@ package cc.yyf.note.destroy;
 import cc.yyf.note.pojo.NoteList;
 import cc.yyf.note.util.SaveNoteCenterJson;
 import cc.yyf.note.util.UrlUtil;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectCloseHandler;

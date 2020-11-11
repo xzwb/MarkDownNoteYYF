@@ -25,14 +25,6 @@ public class IDEAInit implements ApplicationInitializedListener {
         initNoteList();
         SaveNoteCenterJson.getNoteJson();
         NoteTopicNow.TopicNow = "";
-//        NoteData noteData = NoteDataBuilder.build("abcde", "1.txt");
-//        NoteData noteData1 = NoteDataBuilder.build("ccc", "2.txt");
-//        List<NoteData> list = new ArrayList<>();
-//        list.add(noteData);
-//        list.add(noteData1);
-//        NoteCenter.NoteMap.put("aa", list);
-//        NoteList.noteNameList.add("aa");
-//        NoteTopicNow.TopicNow = "aa";
     }
 
     /**
@@ -43,20 +35,13 @@ public class IDEAInit implements ApplicationInitializedListener {
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
         try {
-//            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
             String rootClassPath = UrlUtil.getUrl();
 //             文件如果没有就创建
             String classPath = rootClassPath + File.separator + "githubToken.txt";
-//            File fileToken = new File(this.getClass().getResource(File.separator).getPath() + "gitHubToken.txt");
             File fileToken = new File(classPath);
             if (!fileToken.exists()) {
                 fileToken.createNewFile();
             }
-//            File fileAddress = new File(this.getClass().getResource(File.separator).getPath() + "gitHubAddress.txt");
             classPath = rootClassPath + File.separator + "githubAddress.txt";
             File fileAddress = new File(classPath);
             if (!fileAddress.exists()) {

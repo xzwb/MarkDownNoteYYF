@@ -7,17 +7,11 @@ import cc.yyf.note.procesor.Processor;
 import cc.yyf.note.util.NotificationUtil;
 import cc.yyf.note.util.SetToArray;
 import cc.yyf.note.util.UpLoadGitHubUtil;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationDisplayType;
-import com.intellij.notification.NotificationGroup;
-import com.intellij.notification.Notifications;
+import cc.yyf.note.util.UrlUtil;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptorFactory;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageDialogBuilder;
-import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import freemarker.template.TemplateException;
@@ -31,7 +25,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 工具视窗
@@ -106,13 +99,9 @@ public class NoteListWindow {
         }
         // 获取当前列表的数据
         List<NoteData> list = NoteCenter.NoteMap.get(NoteTopicNow.TopicNow);
-//        List<Map<String, String>> mapList = new ArrayList<>();
-//        ObjectMapper mapper = new ObjectMapper();
-//        mapList = mapper.convertValue(list, new TypeReference<List<Map<String, String>>>(){});
         // 判断选中的列表中有没有数据
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-//                NoteData noteData = NoteDataBuilder.build(mapList.get(i));
                 NoteData noteData = list.get(i);
                 DataCenter.NOTE_DATA_LIST = list;
                 DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
@@ -137,7 +126,7 @@ public class NoteListWindow {
                     DataCenter.reset();
                     // 获取当前列表中的数据
                     List<NoteData> list = NoteCenter.NoteMap.get(selectText);
-                    if (list.size() > 0) {
+                    if (list != null) {
                         for (int i = 0; i < list.size(); i++) {
                             NoteData noteData = list.get(i);
                             DataCenter.NOTE_DATA_LIST = list;
@@ -153,9 +142,7 @@ public class NoteListWindow {
         makeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-//                String topic = textFieldTopic.getText();
                 String topic = (String) textFieldTopic.getSelectedItem();
-//                String topic = "";
                 if (topic == null || "".equals(topic)) {
                     MessageDialogBuilder.yesNo("操作结果", "文档标题没有输入");
                     return;
@@ -176,9 +163,6 @@ public class NoteListWindow {
                         e.printStackTrace();
                     }
                     // 发送通知
-//                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
-//                    Notification notification = firstPluginId.createNotification("文档保存成功", MessageType.INFO);
-//                    Notifications.Bus.notify(notification);
                     NotificationUtil.notification("保存成功", "文档保存成功");
                 }
             }
@@ -202,8 +186,6 @@ public class NoteListWindow {
         uploadButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-//                String topic = textFieldTopic.getText();
-//                String topic = "";
                 String topic = (String) textFieldTopic.getSelectedItem();
                 if (topic == null || "".equals(topic)) {
                     MessageDialogBuilder.yesNo("操作结果", "文档标题没有输入");
@@ -211,12 +193,7 @@ public class NoteListWindow {
                 }
                 // 要保存的文件名称
                 String fileName = topic + ".md";
-//                String path = this.getClass().getResource(File.separator).getPath() + fileName;
-                String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-                rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-                rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-                rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-                rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
+                String rootClassPath = UrlUtil.getUrl();
                 String path = rootClassPath + File.separator + fileName;
                 File file = new File(path);
                 // 文件已经存在
@@ -239,15 +216,9 @@ public class NoteListWindow {
                 file = new File(path);
                 if (UpLoadGitHubUtil.upload(GitHubBuilder.getInstance(), file, fileName)) {
                     // 发送通知
-//                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
-//                    Notification notification = firstPluginId.createNotification("文档上传成功", MessageType.INFO);
-//                    Notifications.Bus.notify(notification);
                     NotificationUtil.notification("保存文档", "文档上传成功");
                 } else {
                     // 发送通知
-//                    NotificationGroup firstPluginId = new NotificationGroup("保存文档", NotificationDisplayType.BALLOON, true);
-//                    Notification notification = firstPluginId.createNotification("文档上传失败", MessageType.INFO);
-//                    Notifications.Bus.notify(notification);
                     NotificationUtil.notification("保存文档", "文档上传失败");
                 }
                 file.delete();
@@ -263,12 +234,22 @@ public class NoteListWindow {
                 // 从NoteCenter中删除
                 NoteCenter.NoteMap.remove(selectText);
                 // 判断还有没有item
+                textFieldTopic.removeItem(selectText);
                 int count = textFieldTopic.getItemCount();
+                DataCenter.reset();
                 if (count == 0) {
                     textFieldTopic.addItem("");
                     textFieldTopic.setSelectedIndex(0);
                 } else {
                     textFieldTopic.setSelectedIndex(0);
+                    selectText = (String) textFieldTopic.getSelectedItem();
+                    List<NoteData> list = new ArrayList<>();
+                    list = NoteCenter.NoteMap.get(selectText);
+                    for (int i = 0; i < list.size(); i++) {
+                        NoteData noteData = list.get(i);
+                        DataCenter.NOTE_DATA_LIST = list;
+                        DataCenter.TABLE_MODEL.addRow(DataConvert.convert(noteData));
+                    }
                 }
             }
         });

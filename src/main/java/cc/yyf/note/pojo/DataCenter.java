@@ -1,11 +1,9 @@
 package cc.yyf.note.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.swing.table.DefaultTableModel;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**

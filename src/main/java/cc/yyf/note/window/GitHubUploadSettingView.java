@@ -61,13 +61,6 @@ public class GitHubUploadSettingView extends UploadSettingView {
         FileOutputStream githubOwnerIn = null;
         try {
             // gitHubAddress
-//            String classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("/").getPath()+"gitHubAddress.txt");
-//            classPath = URLDecoder.decode(classPath, StandardCharsets.UTF_8.name());
-//            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
             String rootClassPath = UrlUtil.getUrl();
             String classPath = rootClassPath + File.separator + "githubAddress.txt";
             githubAddressIn = new FileOutputStream(classPath);
@@ -75,15 +68,11 @@ public class GitHubUploadSettingView extends UploadSettingView {
             githubAddressIn.flush();
             // gitHubToken
             classPath = rootClassPath + File.separator + "githubToken.txt";
-//            classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("/").getPath()+"gitHubToken.txt");
-//            classPath = URLDecoder.decode(classPath, StandardCharsets.UTF_8.name());
             githubTokenIn = new FileOutputStream(classPath);
             githubTokenIn.write(gitHubTokenInFile.getBytes(), 0, gitHubTokenInFile.length());
             githubTokenIn.flush();
 //             gitHubOwner
             classPath = rootClassPath + File.separator + "githubOwner.txt";
-//            classPath = Objects.requireNonNull(this.getClass().getClassLoader().getResource("/").getPath()+"gitHubOwner.txt");
-//            classPath = URLDecoder.decode(classPath, StandardCharsets.UTF_8.name());
             githubOwnerIn = new FileOutputStream(classPath);
             githubOwnerIn.write(gitHubOwnerInFile.getBytes(), 0, gitHubOwnerInFile.length());
             githubOwnerIn.flush();
@@ -116,27 +105,18 @@ public class GitHubUploadSettingView extends UploadSettingView {
         InputStream githubTokenIn = null;
         InputStream githubOwnerIn = null;
         try {
-//            String rootClassPath = this.getClass().getResource(File.separator + "template" + File.separator + "md.ftl").getPath();
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(0, rootClassPath.lastIndexOf(File.separator));
-//            rootClassPath = rootClassPath.substring(rootClassPath.indexOf(":") + 1);
             String rootClassPath = UrlUtil.getUrl();
             String classPath = rootClassPath + File.separator + "githubToken.txt";
             // 文件如果没有就创建
-//            File fileToken = new File(this.getClass().getResource(File.separator).getPath() + "gitHubToken.txt");
             File fileToken = new File(classPath);
             if (!fileToken.exists()) {
                 fileToken.createNewFile();
             }
-//            File fileAddress = new File(this.getClass().getResource(File.separator).getPath() + "gitHubAddress.txt");
             classPath = rootClassPath + File.separator + "githubAddress.txt";
-//            System.out.println(classPath);
             File fileAddress = new File(classPath);
             if (!fileAddress.exists()) {
                 fileAddress.createNewFile();
             }
-//            File fileOwner = new File(this.getClass().getResource(File.separator).getPath() + "gitHubOwner.txt");
             classPath = rootClassPath + File.separator + "githubOwner.txt";
             File fileOwner = new File(classPath);
             if (!fileOwner.exists()) {
