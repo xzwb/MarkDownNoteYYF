@@ -2,10 +2,10 @@
 <idea-plugin>
     <id>cc.yyf.MarkDownNoteYYF</id>
     <name>MarkDownNoteYYF</name>
-    <vendor email="xzwb@xiyoulinux.org" url="https://github.com/xzwb/MarkDownNoteYYF">yyf</vendor>
+    <vendor email="xzwbstu.xupt.edu.cn@stu.xupt.edu.cn " url="https://github.com/xzwb">yyf</vendor>
 
     <description><![CDATA[
-    一个方便程序员对源码做注释，以及方便程序员做笔记的插件<br>
+    A convenient programmer to do comments on the source code, as well as convenient programmers to make notes of the plug-in<br>
     <em>MarkdownNote</em>
     ]]></description>
 
@@ -14,7 +14,7 @@
     <!-- uncomment to enable plugin in all products
     <depends>com.intellij.modules.lang</depends>
     -->
-    <idea-version since-build="181"/>
+    <idea-version since-build="181.00"/>
 
     <depends>com.intellij.modules.java</depends>
     <!--    <depends>com.intellij.modules.java</depends>-->
