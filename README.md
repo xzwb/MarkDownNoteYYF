@@ -4,7 +4,8 @@ idea插件2020版本
 ---
 
 # 项目介绍
-本项目名为`MarkDownNoteYYF`,因为`Java`学习经常要翻看源码,但是源码是只读文件无法添加注释,所以编写一款插件用来给源码做笔记,并且可以保存为`MarkDown`格式文件,同时也支持上传到`GitHub`仓库保存.
+本项目名为`MarkDownNoteYYF`,因为`Java`学习经常要翻看源码,但是源码是只读文件无法添加注释,所以编写一款插件用来给源码做笔记,并且可以保存为`MarkDown`格式文件,同时也支持上传到`GitHub`仓库保存.目前已经发布至JetBrains插件库中
+https://plugins.jetbrains.com/plugin/15393-markdownnoteyyf
 
 ---
 
